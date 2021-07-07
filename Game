@@ -11,22 +11,28 @@ def Home():
                         bg = "#93b4ba",
                         fg="#4287f5",
                         font=("Jomhuria",35,"bold"))
-                welcome_label.place(x=0,y=250)
+                welcome_label.place(x=75,y=300)
                 
 
         def instructions_Window():
-                instructions_Window = Toplevel()
+                instructions_Window = Tk()
                 instructions_Window.title("instructions")
+                instructions_Window.config(bg="#6378ff")
 
                 instructions = Label(
                         instructions_Window,
-                        text = "WELCOME TO THE TRIVIA GAME!\nYour will answer 10 question, the questions will be about general knowledge.\nMake sure you are doing your best maybe you will on the leaderboard soon!\n GOOD LUCK!!!",
-                        font = ("Staatliches",30))
+                        text = "WELCOME TO THE TRIVIA GAME!\nThere are 2 levels in the game, you can choose between beginners level or professionals level.\nYou have 20 seconds to answer each question.\nGood luck!!!",
+                        font = ("Staatliches",30,"bold"),
+                        bg="#6378ff")
                 instructions.pack()
 
                 back_but = Button(
                         instructions_Window,
                         text="Back",
+                        bg="#6378ff",
+                        font=("Arial", 20,"bold"),
+                        width=10,
+                        height=5,
                         command=instructions_Window.destroy)
                 back_but.pack()
 
