@@ -209,6 +209,15 @@ def trivia():
                 for widgets in window.winfo_children():
                         widgets.destroy()
 
+        def Intermediate():
+                global questions
+                global options
+                WaitSate_difficulty.set(1)
+                questions = questions_int
+                options = options_int
+                for widgets in window.winfo_children():
+                        widgets.destroy()  
+
         def professional():
                 global questions
                 global options
@@ -268,7 +277,7 @@ def trivia():
         i = 0
         correct_guesses = 0
 
-        count = 20
+        count = 15
         button_label = StringVar()
 
         trophyImage = PhotoImage(file="trophy.png")
@@ -322,7 +331,18 @@ def trivia():
                 command=beginners,
                 bg="#bf0704",
                 fg="white")
-        button_beg.place(x=400,y=300)
+        button_beg.place(x=150,y=300)
+
+        button_int = Button(
+                window,
+                text="Intermediate",
+                font=("Press Start 2P",25,"bold"),
+                width=25,
+                height=10,
+                command=Intermediate,
+                bg="#bf0704",
+                fg="white")
+        button_int.place(x=700,y=300)
 
 
         button_pro = Button(
@@ -334,7 +354,7 @@ def trivia():
                 command=professional,
                 bg="#bf0704",
                 fg="white")
-        button_pro.place(x=950,y=300)
+        button_pro.place(x=1250,y=300)
         button_pro.wait_variable(WaitSate_difficulty)
 
 
@@ -469,9 +489,9 @@ def trivia():
 
 questions_pro = {
 "How old is the universe?": "B",
-"Who was the first person in space?": "C",
+"What are the three primary colors?": "B",
 "How many bones does a human body have?": "A",
-"What is the most populated country?": "A",
+"Which planet has the most gravity in the solar system?": "C",
 "What is the height of the tallest man in the world in 2021?": "D",
 "What is the most valued company in the world?": "A",
 "Who created python?": "B",
@@ -482,9 +502,9 @@ questions_pro = {
 
 
 options_pro = [["A. 5.3 billion years old", "B. 13.8 billion years old", "C. 115.5 billion years ago", "D. 241.1 billion years old"],
-          ["A. Alan Shepard", "B. Neil Armstrong", "C. Yuri Gagarin", "D. Buzz Aldrin"],
+          ["A. Red, yellow, and green", "B. Red, yellow, and blue", "C. Green, red, and blue", "D. Black, yellow, and red"],
           ["A. 206", "B. 54", "C. 251", "D. 180"],
-          ["A. China","B. Russia", "C. India", "D. United States"],
+          ["A. Neptune","B. Mars", "C. Jupiter", "D. Earth"],
           ["A. 2.35 meters", "B. 2.47 meters","C. 2.71 meters", "D. 2.51 meters"],
           ["A. Apple", "B. Google", "C. Microsoft", "D. Amazon"],
           ["A. Brendan Eich", "B. Van Rossum", "C. Bjarne Stroustrups", "D. Dennis Ritchie"],
@@ -492,30 +512,57 @@ options_pro = [["A. 5.3 billion years old", "B. 13.8 billion years old", "C. 115
           ["A. 366.82 million km", "B. 251.87 milion km", "C. 1.578 milion km", "D. 350.34 milion km"],
           ["A. 1999", "B. 2001", "C. 1983", "D. 1985"]]
 
+questions_int = {
+"Who was the first person in space?": "C",
+"What is the biggest technology company in South Korea?": "C",
+"Which movie made the most money?": "A",
+"How many bones do sharks have in their bodies?": "D",
+"How many hearts does an octopus have?": "B",
+"What is the most populated country?": "A",
+"In what years did the world war II took place?": "D",
+"The Statue of Liberty was given to the US by which country?": "B",
+"What is the closet planet to the sun?": "D",
+"What is the heaviest creature on earth?": "A"
+}
+
+
+options_int = [["A. Alan Shepard", "B. Neil Armstrong", "C. Yuri Gagarin", "D. Buzz Aldrin"],
+          ["A. Apple", "B. Xiaomi", "C. Samsung", "D. Huawei"],
+          ["A. Avatar", "B. Avengers: Endgame", "C. Titanic", "D. Star Wars: Episode VII"],
+          ["A. 5","B. 15", "C. 8", "D. 0"],
+          ["A. Six", "B. Three","C. One", "D. Five"],
+          ["A. China","B. Russia", "C. India", "D. United States"],
+          ["A. 1914-1921", "B. 1945-1948", "C. 1928-1935", "D. 1939-1945"],
+          ["A. Canda", "B. France", "C. United Kingdom", "D. Mexico"],
+          ["A. Jupiter", "B. Mars", "C. Venus", "D. Mercury"],
+          ["A. Blue whale", "B. Sperm whale", "C. Bowhead whale", "D. Southern right whale"]]
+
+
+
 
 questions_beg = {
-"In what years did the world war II took place?": "D",
+"How many players are there in a basketball game?": "A",
 "Who was the first presidnet of the U.S?": "B",
 "In which year the first covid-19 case was discovered?": "C",
 "How many continents are there in the world?": "A",
 "How many planets are there in the solar system?": "D",
-"What is the biggest technology company in South Korea?": "C",
+"What is the capital city of Spain?": "B",
 "What was the first soft drink in space?": "B",
 "Who holds the record for 100 metres dash?": "C",
-"Which movie made the most money?": "A",
+"What’s the hardest rock?": "A",
 "How many states does the U.S is have?": "B"
 }
 
 
-options_beg = [["A. 1914-1921", "B. 1945-1948", "C. 1928-1935", "D. 1939-1945"],
+options_beg = [["A. 10", "B. 5", "C. 12", "D. 8"],
           ["A. Abraham Lincoln", "B. George Washington", "C. John Tyler", "D. John Adams"],
           ["A. 2018", "B. 2001", "C. 2019", "D.2020"],
           ["A. Seven","B. Five", "C. Four", "D. Six"],
           ["A. Six", "B. Seven","C. Nine", "D. Eight"],
-          ["A. Apple", "B. Xiaomi", "C. Samsung", "D. Huawei"],
+          ["A. Barcelona", "B. Madrid", "C. Lisbon", "D. Paris"],
           ["A. Water", "B. Coca Cola", "C. Fanta", "D. Pepsi"],
           ["A. Asafa Powell", "B. Yohan Blake", "C. Usain Bolt", "D. Tyson Gay"],
-          ["A. Avatar", "B. Avengers: Endgame", "C. Titanic", "D. Star Wars: Episode VII"],
+          ["A. Diamond", "B. Corundum", "C. Quartz", "D. Apatite"],
           ["A. 48", "B. 50", "C. 51", "D. 52"]]
 
 
