@@ -1,0 +1,519 @@
+from tkinter import *
+import operator
+
+def Home():
+
+        def name():
+                name = entry_name.get()
+                welcome_label = Label(
+                        window,
+                        text="Hello " + name + " you may start your trivia game by clicking at the 'Start' button" ,
+                        bg = "#93b4ba",
+                        fg="#4287f5",
+                        font=("Jomhuria",35,"bold"))
+                welcome_label.place(x=0,y=250)
+                
+
+        def instructions_Window():
+                instructions_Window = Toplevel()
+                instructions_Window.title("instructions")
+
+                instructions = Label(
+                        instructions_Window,
+                        text = "WELCOME TO THE TRIVIA GAME!\nYour will answer 10 question, the questions will be about general knowledge.\nMake sure you are doing your best maybe you will on the leaderboard soon!\n GOOD LUCK!!!",
+                        font = ("Staatliches",30))
+                instructions.pack()
+
+                back_but = Button(
+                        instructions_Window,
+                        text="Back",
+                        command=instructions_Window.destroy)
+                back_but.pack()
+
+        def clear():
+                for widgets in window.winfo_children():
+                        widgets.destroy()
+
+        clear()
+        window.config(bg="#93b4ba")
+        label_welcome = Label(
+                window,
+                text="Welcome Back To Our Trivia Game!",
+                font=("Akaya Kanadaka",80,"bold"),
+                bg = "#93b4ba")
+        label_welcome.pack()
+
+        label_enter_name = Label(
+                window,
+                text="Enter you name:",
+                font=("Lato",50,"bold"),
+                bg = "#93b4ba",
+                fg="#3038d1")
+        label_enter_name.pack(side=LEFT)
+
+
+        entry_name = Entry(window,font=("Arial",40))
+        entry_name.pack(side=LEFT)
+
+        username_but = Button(
+                window,
+                text="Sumbit",
+                font=("Jomhuria",10,"bold"),
+                width=15,
+                height=4,
+                command=name,
+                bg="#0f0f0f",
+                fg="white")
+        username_but.pack(side=LEFT)
+
+        quit_but = Button(
+                window,
+                text="Quit",
+                font=("Jomhuria",25,"bold"), 
+                width=11,
+                height=5,
+                command=quit,
+                bg="#b5aa72")
+        quit_but.place(x=0,y=860)
+
+        start_but = Button(
+                window,
+                text="Start",
+                font=("Jomhuria",25,"bold"),
+                width=11,
+                height=5,
+                command=trivia,
+                bg="#a1ad90")
+        start_but.place(relx = 1.0,rely = 1.0,anchor =SE)
+
+        instructions_but = Button(
+                window,
+                text="Instructions",
+                font=("Jomhuria",25,"bold"),
+                width=11,
+                height=5,
+                command=instructions_Window,
+                bg="#626363")
+        instructions_but.pack(side=RIGHT)
+
+
+def trivia():
+
+        def End(correct_guesses):
+
+                def play_again():
+                        trivia()
+                score_label = Label(
+                        window,
+                        text="You have answered " + str(correct_guesses) + " correct question",
+                         font=("Playfair Display SC", 40, "bold"),
+                        bg="#6378ff",
+                        fg="#730505",
+                        height=2)
+                score_label.pack()
+
+                score = int((correct_guesses/len(questions))*100)
+                score_precent = Label(
+                        window,
+                        text="You score is " + str(score) + "%",
+                        font=("Playfair Display SC", 45, "bold"),
+                        bg="#6378ff",
+                        fg="#52504d",
+                        height=2)
+                score_precent.pack()
+
+                play_again_but = Button(
+                        window,
+                        text="Play Again",
+                        bg="#28a663",
+                        width=11,
+                        height=5,
+                        font=("Russo One", 25, "bold"),
+                        command=play_again)
+                play_again_but.place(relx = 1.0,rely = 1.0,anchor =SE)
+
+                home_but = Button(
+                        window,
+                        text="Home",
+                        bg="#7b22d4",
+                        height=5,
+                        width=11,
+                        font=("Russo One", 25, "bold"),
+                        command=Home)
+                home_but.pack(side=BOTTOM)
+
+                quit_but = Button(
+                        window,
+                        text="Quit",
+                        font=("Jomhuria",25,"bold"),
+                        width=11,
+                        height=5,
+                        command=quit,
+                        bg="#b5aa72")
+                quit_but.place(x=0,y=860)
+
+                leaderboard[username] = score
+
+                sorted_leaderboard = dict( sorted(leaderboard.items(), key=operator.itemgetter(1),reverse=True))
+
+                lead_lab = Label(
+                        window,
+                        text="Leaderboard: ",
+                        font=("Arial",50,"bold"),
+                        bg="#6378ff")
+                lead_lab.place(x=0,y=400)
+                y = 400
+
+                for user in sorted_leaderboard:
+                        leaderboard_label = Label(
+                                window,
+                                text="Username: "+str(user)+" "+"Score: "+str(sorted_leaderboard[user]),
+                                font=("Arial",50,"bold"),
+                                bg="#6378ff",
+                                fg="#000000")
+                        leaderboard_label.place(x=450,y=y)
+                        y = y + 100
+
+        def check_answer(answer, guess):
+
+                if answer == guess:
+                        return 1
+                else:
+                        return 0
+
+        def clear():
+                WaitState.set(1)
+                for widgets in window.winfo_children():
+                        widgets.destroy()
+                window.after_cancel(window.after_id)
+
+        def user_name():
+                global username
+                WaitSate_username.set(1)
+                username = entry_username.get()
+                for widgets in window.winfo_children():
+                        widgets.destroy()
+        
+        def beginners():
+                global questions
+                global options
+                WaitSate_difficulty.set(1)
+                questions = questions_beg
+                options = options_beg
+                for widgets in window.winfo_children():
+                        widgets.destroy()
+
+        def professional():
+                global questions
+                global options
+                WaitSate_difficulty.set(1)
+                questions = questions_pro
+                options = options_pro
+                for widgets in window.winfo_children():
+                        widgets.destroy()
+
+        def clear_time():
+                clear()
+
+
+                time_up_label = Label(
+                        window,
+                        text="Time is up",
+                        bg = "#6378ff",
+                        fg="#000000",
+                        font=("Arial", 100,"bold"))
+                time_up_label.place(relx = 0.5,rely = 0.5,anchor = 'center')
+
+                continue_but = Button(
+                        window,
+                        text="Continue",
+                        font=("Knewave",25,"bold"),
+                        bg="#942222",
+                        width=11,
+                        height=5,
+                        command=clear)
+                continue_but.place(relx = 1.0,rely = 1.0,anchor =SE)
+                
+
+                continue_but.wait_variable(WaitState)
+
+                
+
+
+        def button_countdown(i, label):
+                if i > 0:
+                        i -= 1
+                        label.set(i)
+                        window.after_id = window.after(1000, lambda: button_countdown(i, label))
+                else:
+                        clear_time()
+                        
+
+
+        window.config(bg="#6378ff")
+
+        x = StringVar()
+        WaitState = StringVar()
+        WaitSate_username = StringVar()
+        WaitSate_difficulty = StringVar()
+        i = 0
+        correct_guesses = 0
+
+        count = 20
+        button_label = StringVar()
+
+        trophyImage = PhotoImage(file="trophy.png")
+        redImage = PhotoImage(file="red.png")
+
+        WaitState.set(1)
+        for widgets in window.winfo_children():
+                widgets.destroy()
+
+
+        label_enter_username = Label(
+                window,
+                text="Enter your username:",
+                font=("Lato",50,"bold"),
+                bg = "#6378ff",
+                fg="#000000")
+        label_enter_username.pack(side=LEFT)
+
+        entry_username = Entry(
+                window,
+                font=("Arial",40))
+        entry_username.pack(side=LEFT)
+
+        username_but = Button(
+                window,
+                text="Continue",
+                font=("Press Start 2P",10,"bold"),
+                width=15,
+                height=4,
+                command=user_name,
+                bg="#000000",
+                fg="white")
+        username_but.pack(side=LEFT)
+        username_but.wait_variable(WaitSate_username)
+
+
+        label_difficulty = Label(
+                window,
+                text="Choose your difficulty:",
+                font=("Lato",100,"bold"),
+                bg = "#6378ff",
+                fg="#000000")
+        label_difficulty.place(x=200,y=0)
+
+        button_beg = Button(
+                window,
+                text="Beginner",
+                font=("Press Start 2P",25,"bold"),
+                width=25,
+                height=10,
+                command=beginners,
+                bg="#bf0704",
+                fg="white")
+        button_beg.place(x=400,y=300)
+
+
+        button_pro = Button(
+                window,
+                text="Professional",
+                font=("Press Start 2P",25,"bold"),
+                width=25,
+                height=10,
+                command=professional,
+                bg="#bf0704",
+                fg="white")
+        button_pro.place(x=950,y=300)
+        button_pro.wait_variable(WaitSate_difficulty)
+
+
+
+        for key in questions:
+                j = 0
+
+                button_label.set(count)
+                timer_label = Label(
+                        window,
+                        textvariable=button_label,
+                        bg="#6378ff",
+                        fg="#ff0000",
+                        font=("Arial",46,"bold"))
+                timer_label.pack()
+                button_countdown(count, button_label)
+
+                question_number = 0
+                question_label = Label(
+                        window,
+                        text=key,
+                        bg="#6378ff",
+                        fg="#e8e8e8",
+                        font=("Squada One",50,"bold"),
+                        width=1920,
+                        height=2)
+                question_label.pack()
+
+                continue_but = Button(
+                        window,
+                        text="Continue",
+                        font=("Knewave",25,"bold"),
+                        bg="#942222",
+                        width=11,
+                        height=5,
+                        command=clear)
+                continue_but.place(relx = 1.0,rely = 1.0,anchor =SE)
+
+                quit_but = Button(
+                        window,
+                        text="Quit",
+                        font=("Jomhuria",25,"bold"),
+                        width=11,
+                        height=5,
+                        bg="#b5aa72",
+                        command=window.destroy)
+                quit_but.place(x=0,y=863)
+                
+                for index in options[question_number-1]:
+                        options_radio = Radiobutton(
+                                window,
+                                text=options[i][j],
+                                variable=x,
+                                value=options[i][j],
+                                bg="#6378ff",
+                                font=("Squada One",30,"bold"),
+                                fg="#000000",
+                                height=3,
+                                indicatoron=0,
+                                activebackground="#209799",
+                                width=1920)
+                        options_radio.pack(anchor=W)
+
+                        j += 1
+                continue_but.wait_variable(WaitState)
+                guess = x.get()
+                guess = list(guess)
+                for num in guess:
+                       guess = num
+                       break 
+                correct_guesses = correct_guesses + check_answer(questions.get(key), guess)
+                
+
+                correct = check_answer(questions.get(key), guess)
+
+                clear()
+                if correct == 1:
+                        correct_label = Label(window,
+                                text="Correct!",
+                                bg="#6378ff",
+                                fg="#ffaa00",
+                                font=("Arial",100,"bold"),
+                                image = trophyImage,
+                                compound='left')
+                        correct_label.place(relx = 0.5,rely = 0.5,anchor = 'center')
+
+                        continue_but = Button(
+                                window,
+                                text="Continue",
+                                font=("Knewave",25,"bold"),
+                                bg="#942222",
+                                width=11,
+                                height=5,
+                                command=clear)
+                        continue_but.place(relx = 1.0,rely = 1.0,anchor =SE)
+
+                        continue_but.wait_variable(WaitState)
+                elif correct == 0:
+                        wrong_label = Label(
+                                window,
+                                text="Wrong!",
+                                bg="#6378ff",
+                                fg="#000000",
+                                font=("Franklin Gothic Medium",100,"bold"),
+                                image=redImage,
+                                compound='left')
+                        wrong_label.place(relx = 0.5,rely = 0.5,anchor = 'center')
+
+                        continue_but = Button(
+                                window,
+                                text="Continue",
+                                font=("Franklin Gothic Medium",25,"bold"),
+                                bg="#942222",
+                                width=11,
+                                height=5,
+                                command=clear)
+                        continue_but.place(relx = 1.0,rely = 1.0,anchor =SE)
+
+                        continue_but.wait_variable(WaitState)
+                
+
+                question_number = question_number + 1
+                i += 1
+
+        End(correct_guesses)
+
+
+questions_pro = {
+"How old is the universe?": "B",
+"Who was the first person in space?": "C",
+"How many bones does a human body have?": "A",
+"What is the most populated country?": "A",
+"What is the height of the tallest man in the world in 2021?": "D",
+"What is the most valued company in the world?": "A",
+"Who created python?": "B",
+"How many oceans are there in the world?": "A",
+"What is the distance between earth and mars?": "A",
+"In which year the first windows version was released?": "D"
+}
+
+
+options_pro = [["A. 5.3 billion years old", "B. 13.8 billion years old", "C. 115.5 billion years ago", "D. 241.1 billion years old"],
+          ["A. Alan Shepard", "B. Neil Armstrong", "C. Yuri Gagarin", "D. Buzz Aldrin"],
+          ["A. 206", "B. 54", "C. 251", "D. 180"],
+          ["A. China","B. Russia", "C. India", "D. United States"],
+          ["A. 2.35 meters", "B. 2.47 meters","C. 2.71 meters", "D. 2.51 meters"],
+          ["A. Apple", "B. Google", "C. Microsoft", "D. Amazon"],
+          ["A. Brendan Eich", "B. Van Rossum", "C. Bjarne Stroustrups", "D. Dennis Ritchie"],
+          ["A. Five", "B. Ten", "C. Seven", "D. Three"],
+          ["A. 366.82 million km", "B. 251.87 milion km", "C. 1.578 milion km", "D. 350.34 milion km"],
+          ["A. 1999", "B. 2001", "C. 1983", "D. 1985"]]
+
+
+questions_beg = {
+"In what years did the world war II took place?": "D",
+"Who was the first presidnet of the U.S?": "B",
+"In which year the first covid-19 case was discovered?": "C",
+"How many continents are there in the world?": "A",
+"How many planets are there in the solar system?": "D",
+"What is the biggest technology company in South Korea?": "C",
+"What was the first soft drink in space?": "B",
+"Who holds the record for 100 metres dash?": "C",
+"Which movie made the most money?": "A",
+"How many states does the U.S is have?": "B"
+}
+
+
+options_beg = [["A. 1914-1921", "B. 1945-1948", "C. 1928-1935", "D. 1939-1945"],
+          ["A. Abraham Lincoln", "B. George Washington", "C. John Tyler", "D. John Adams"],
+          ["A. 2018", "B. 2001", "C. 2019", "D.2020"],
+          ["A. Seven","B. Five", "C. Four", "D. Six"],
+          ["A. Six", "B. Seven","C. Nine", "D. Eight"],
+          ["A. Apple", "B. Xiaomi", "C. Samsung", "D. Huawei"],
+          ["A. Water", "B. Coca Cola", "C. Fanta", "D. Pepsi"],
+          ["A. Asafa Powell", "B. Yohan Blake", "C. Usain Bolt", "D. Tyson Gay"],
+          ["A. Avatar", "B. Avengers: Endgame", "C. Titanic", "D. Star Wars: Episode VII"],
+          ["A. 48", "B. 50", "C. 51", "D. 52"]]
+
+
+leaderboard = {
+        
+}
+        
+window = Tk()
+window.title("Home")
+window.attributes('-fullscreen',True)
+window.config(bg="#93b4ba")
+
+Home()
+
+window.mainloop()
