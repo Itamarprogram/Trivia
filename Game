@@ -1,5 +1,6 @@
 from tkinter import *
 import operator
+import pygame
 
 def Home():
 
@@ -21,7 +22,7 @@ def Home():
 
                 instructions = Label(
                         instructions_Window,
-                        text = "WELCOME TO THE TRIVIA GAME!\nThere are 2 levels in the game, you can choose between beginners level or professionals level.\nYou have 20 seconds to answer each question.\nGood luck!!!",
+                        text = "WELCOME TO THE TRIVIA GAME!\nThere are 3 levels in the game, you can choose between beginners level Intermediates level or professionals level.\nYou will have 15 seconds to answer each question.\nGood luck!!!",
                         font = ("Staatliches",30,"bold"),
                         bg="#6378ff")
                 instructions.pack()
@@ -176,7 +177,7 @@ def trivia():
                                 text="Username: "+str(user)+" "+"Score: "+str(sorted_leaderboard[user]),
                                 font=("Arial",50,"bold"),
                                 bg="#6378ff",
-                                fg="#000000")
+                                fg="#000000") 
                         leaderboard_label.place(x=450,y=y)
                         y = y + 100
 
@@ -266,9 +267,24 @@ def trivia():
         def clicked():
                 continue_but["state"] = NORMAL
                         
+        def play_correct():
+                pygame.mixer.music.load("Correct.mp3")
+                pygame.mixer.music.play(loops=0)
 
+        def play_wrong():
+                pygame.mixer.music.load("Wrong.mp3")
+                pygame.mixer.music.play(loops=0)
+
+        def play_thinking():
+                pygame.mixer.music.load("Thinking.mp3")
+                pygame.mixer.music.play(loops=0)
+
+        def stop_music():
+                pygame.mixer.music.stop()
 
         window.config(bg="#6378ff")
+
+        pygame.mixer.init()
 
         x = StringVar()
         WaitState = StringVar()
@@ -279,8 +295,8 @@ def trivia():
 
         count = 15
         button_label = StringVar()
-
-        trophyImage = PhotoImage(file="trophy.png")
+        
+        trophyImage = PhotoImage(file="trophy.png")  
         redImage = PhotoImage(file="red.png")
 
         WaitState.set(1)
@@ -360,6 +376,7 @@ def trivia():
 
 
         for key in questions:
+                play_thinking()
                 clear_time.has_been_called = False
                 j = 0
 
@@ -437,6 +454,7 @@ def trivia():
                 clear()
                 if clear_time.has_been_called == False:
                         if correct == 1:
+                                play_correct()
                                 correct_label = Label(window,
                                         text="Correct!",
                                         bg="#6378ff",
@@ -458,6 +476,7 @@ def trivia():
 
                                 continue_but.wait_variable(WaitState)
                         elif correct == 0:
+                                play_wrong()
                                 wrong_label = Label(
                                         window,
                                         text="Wrong!",
@@ -483,6 +502,7 @@ def trivia():
 
                 question_number = question_number + 1
                 i += 1
+                stop_music()
 
         End(correct_guesses)
 
