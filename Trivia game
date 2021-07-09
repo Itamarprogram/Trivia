@@ -194,7 +194,7 @@ def trivia():
                         widgets.destroy()
                 window.after_cancel(window.after_id)
 
-        def user_name():
+        def user_name(event):
                 global username
                 WaitSate_username.set(1)
                 username = entry_username.get()
@@ -293,11 +293,13 @@ def trivia():
         i = 0
         correct_guesses = 0
 
-        count = 20
+        count = 15
         button_label = StringVar()
         
         trophyImage = PhotoImage(file="trophy.png")  
         redImage = PhotoImage(file="red.png")
+
+        window.bind("<Return>", user_name)
 
         WaitState.set(1)
         for widgets in window.winfo_children():
@@ -328,6 +330,8 @@ def trivia():
                 fg="white")
         username_but.pack(side=LEFT)
         username_but.wait_variable(WaitSate_username)
+
+
 
 
         label_difficulty = Label(
@@ -373,7 +377,7 @@ def trivia():
         button_pro.place(x=1250,y=300)
         button_pro.wait_variable(WaitSate_difficulty)
 
-
+        window.unbind("<Return>")
 
         for key in questions:
                 play_thinking()
@@ -455,15 +459,7 @@ def trivia():
                                         compound='left')
                                 correct_label.place(relx = 0.5,rely = 0.5,anchor = 'center')
 
-                                continue_but = Button(
-                                        window,
-                                        text="Continue",
-                                        font=("Knewave",25,"bold"),
-                                        bg="#942222",
-                                        width=11,
-                                        height=5,
-                                        command=clear)
-                                continue_but.place(relx = 1.0,rely = 1.0,anchor =SE)
+                                window.after(3000, clear)
 
                                 continue_but.wait_variable(WaitState)
                         elif correct == 0:
@@ -478,15 +474,7 @@ def trivia():
                                         compound='left')
                                 wrong_label.place(relx = 0.5,rely = 0.5,anchor = 'center')
 
-                                continue_but = Button(
-                                        window,
-                                        text="Continue",
-                                        font=("Franklin Gothic Medium",25,"bold"),
-                                        bg="#942222",
-                                        width=11,
-                                        height=5,
-                                        command=clear)
-                                continue_but.place(relx = 1.0,rely = 1.0,anchor =SE)
+                                window.after(3000, clear)
 
                                 continue_but.wait_variable(WaitState)
                 
