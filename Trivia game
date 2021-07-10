@@ -2,6 +2,8 @@ from tkinter import *
 import operator
 import pygame
 
+
+
 def Home():
 
         def name():
@@ -194,7 +196,15 @@ def trivia():
                         widgets.destroy()
                 window.after_cancel(window.after_id)
 
-        def user_name(event):
+        def user_name():
+                global username
+                WaitSate_username.set(1)
+                username = entry_username.get()
+                for widgets in window.winfo_children():
+                        widgets.destroy()
+        
+        
+        def user_name_enter(event):
                 global username
                 WaitSate_username.set(1)
                 username = entry_username.get()
@@ -237,18 +247,12 @@ def trivia():
                         text="Time is up",
                         bg = "#6378ff",
                         fg="#000000",
+                        image = redImage,
+                        compound='left',
                         font=("Arial", 100,"bold"))
                 time_up_label.place(relx = 0.5,rely = 0.5,anchor = 'center')
 
-                continue_but = Button(
-                        window,
-                        text="Continue",
-                        font=("Knewave",25,"bold"),
-                        bg="#942222",
-                        width=11,
-                        height=5,
-                        command=clear)
-                continue_but.place(relx = 1.0,rely = 1.0,anchor =SE)
+                window.after(2500, clear)
                 
                 clear_time.has_been_called = True
                 pass
@@ -299,7 +303,7 @@ def trivia():
         trophyImage = PhotoImage(file="trophy.png")  
         redImage = PhotoImage(file="red.png")
 
-        window.bind("<Return>", user_name)
+        window.bind("<Return>", user_name_enter)
 
         WaitState.set(1)
         for widgets in window.winfo_children():
@@ -330,8 +334,6 @@ def trivia():
                 fg="white")
         username_but.pack(side=LEFT)
         username_but.wait_variable(WaitSate_username)
-
-
 
 
         label_difficulty = Label(
@@ -459,7 +461,7 @@ def trivia():
                                         compound='left')
                                 correct_label.place(relx = 0.5,rely = 0.5,anchor = 'center')
 
-                                window.after(3000, clear)
+                                window.after(2500, clear)
 
                                 continue_but.wait_variable(WaitState)
                         elif correct == 0:
@@ -474,7 +476,7 @@ def trivia():
                                         compound='left')
                                 wrong_label.place(relx = 0.5,rely = 0.5,anchor = 'center')
 
-                                window.after(3000, clear)
+                                window.after(2500, clear)
 
                                 continue_but.wait_variable(WaitState)
                 
