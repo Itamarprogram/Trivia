@@ -3,7 +3,6 @@ import operator
 import pygame
 
 
-
 def Home():
 
         def name():
@@ -24,8 +23,8 @@ def Home():
 
                 instructions = Label(
                         instructions_Window,
-                        text = "WELCOME TO THE TRIVIA GAME!\nThere are 3 levels in the game, you can choose between beginners level Intermediates level or professionals level.\nYou will have 15 seconds to answer each question.\nGood luck!!!",
-                        font = ("Staatliches",30,"bold"),
+                        text = "WELCOME TO THE TRIVIA GAME!\nThere are 3 levels in the game.\nYou can choose between beginners level Intermediates level or professionals level.\nYou will have a certain amount of seconds for each question depends on your level \nGood luck!!!",
+                        font = ("Staatliches",20,"bold"),
                         bg="#6378ff")
                 instructions.pack()
 
@@ -212,29 +211,41 @@ def trivia():
                         widgets.destroy()
         
         def beginners():
+                global count
                 global questions
                 global options
                 WaitSate_difficulty.set(1)
                 questions = questions_beg
                 options = options_beg
+                count = 20
+                beginners.has_been_called = True
+                pass
                 for widgets in window.winfo_children():
                         widgets.destroy()
 
         def Intermediate():
+                global count
                 global questions
                 global options
                 WaitSate_difficulty.set(1)
                 questions = questions_int
                 options = options_int
+                count = 15
+                Intermediate.has_been_called = True
+                pass
                 for widgets in window.winfo_children():
                         widgets.destroy()  
 
         def professional():
+                global count
                 global questions
                 global options
                 WaitSate_difficulty.set(1)
                 questions = questions_pro
                 options = options_pro
+                count = 10
+                professional.has_been_called = True
+                pass
                 for widgets in window.winfo_children():
                         widgets.destroy()
 
@@ -297,7 +308,6 @@ def trivia():
         i = 0
         correct_guesses = 0
 
-        count = 15
         button_label = StringVar()
         
         trophyImage = PhotoImage(file="trophy.png")  
@@ -380,6 +390,8 @@ def trivia():
         button_pro.wait_variable(WaitSate_difficulty)
 
         window.unbind("<Return>")
+
+
 
         for key in questions:
                 play_thinking()
